@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Welcome to nginx configured as reverse proxy</title>
+
+<style>
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+</style>
+
+<script>
+
+function callServer(url, outputID) { 
+    console.log("callServer calls: " + url);
+
+    fetch(url, {mode: 'cors'}).then(function (fetchresponse) {  
+        fetchresponse.text().then(function(fetchdata) {  
+            console.log("callServer call to url '", url, "' received:", fetchdata);  	 
+            document.getElementById(outputID).innerHTML = fetchdata;   
+        });         
+    })  
+    .catch(function (error) {  
+        console.log("ERROR: callServer call to url '" + url + "' has failed with error: " + error.toString());  
+        document.getElementById(outputID).innerHTML = "Failed call: '" + url + "'"
+    });
+}
+    
+function testProxy()  {   
+    console.log("BEGIN testProxy ...");      
+    callServer("/max", "out1");
+    callServer("/sysmon", "out2");
+    console.log("END testProxy ...");      
+}
+
+</script>
+
+</head>
+
+<body onload="testProxy();">
+<h1>Welcome to nginx configured as reverse proxy</h1>
+<h2>Testing reverse proxy by calling two node apps on different ports</h2>
+<h2>Response:</h2>
+<p id="out1">response1</p>
+<p id="out2">response2</p>
+<h3>See also the output in debug console ...</h3>
+</body>
+
+</html>
