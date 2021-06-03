@@ -23,20 +23,21 @@ https://www.linode.com/docs/guides/use-nginx-reverse-proxy/
 - Ho configurato nginx ispirandomi all'articolo 1.
 -- ho modificato: '/etc/nginx/sites-available/default' aggiungendo due semplici location:
 
-	location / {
-		# First attempt to serve request as file, then
-		# as directory, then fall back to displaying a 404.
-		try_files $uri $uri/ =404;
-	}
+    
+    location / {
+        # First attempt to serve request as file, then
+        # as directory, then fall back to displaying a 404.
+        try_files $uri $uri/ =404;
+    }
 
-	location /max {
-                proxy_pass http://192.168.1.147:1964/;
-        }
+    location /max {
+        proxy_pass http://192.168.1.147:1964/;
+    }
 
-	location /sysmon {
-                proxy_pass http://192.168.1.147:5000/;
-        }
-
+    location /sysmon {
+        proxy_pass http://192.168.1.147:5000/;
+    }
+    
 
 - Ho creato un HTML di test '/var/www/html/testproxy.html' aggiungendo uno script che chiama le due app via fetch e scrive le risposte sulla console
 
